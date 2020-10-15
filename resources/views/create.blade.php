@@ -6,13 +6,13 @@
 
   @method('POST')
   <label for="marca">Marca</label>
-  <input type="text" name="marca" placeholder="marca" id="marca">
+  <input type="text" name="marca" placeholder="marca" id="marca" value="{{ old('marca') }}">
 
   <label for="modello">Modello</label>
-  <input type="text" name="modello" placeholder="modello" id="modello">
+  <input type="text" name="modello" placeholder="modello" id="modello" value="{{ old('modello') }}">
 
   <label for="anno">Anno</label>
-  <input type="text" name="anno" placeholder="anno" id="anno">
+  <input type="text" name="anno" placeholder="anno" id="anno" value="{{old('anno')}}">
 
   <input type="submit" value="Invia">
 </form>

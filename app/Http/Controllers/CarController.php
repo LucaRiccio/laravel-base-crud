@@ -38,12 +38,15 @@ class CarController extends Controller
     {
       $data = $request->all();
 
+      if (empty($data['marca']) || empty($data['modello']) || empty($data['anno'])) {
+        return back()->withInput();
+      }
+
       $userNew = new Car;
       $userNew->marca = $data['marca']; // deve corrispondere con il form
       $userNew->modello = $data['modello']; // deve corrispondere con il form
       $userNew->anno = $data['anno']; // deve corrispondere con il form
-      $l = $userNew->save();
-      dd($l);
+      $userNew->save();
     }
 
     /**
