@@ -38,15 +38,18 @@ class CarController extends Controller
     {
       $data = $request->all();
 
-      if (empty($data['marca']) || empty($data['modello']) || empty($data['anno'])) {
-        return back()->withInput();
-      }
+      // if (empty($data['marca']) || empty($data['modello']) || empty($data['anno'])) {
+      //   return back()->withInput();
+      // }
 
       $userNew = new Car;
-      $userNew->marca = $data['marca']; // deve corrispondere con il form
-      $userNew->modello = $data['modello']; // deve corrispondere con il form
-      $userNew->anno = $data['anno']; // deve corrispondere con il form
+      // $userNew->marca = $data['marca']; // deve corrispondere con il form
+      // $userNew->modello = $data['modello']; // deve corrispondere con il form
+      // $userNew->anno = $data['anno']; // deve corrispondere con il form
+      $userNew->fill($data);
       $userNew->save();
+      return redirect()->route('cars.index');
+
     }
 
     /**
@@ -55,10 +58,17 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+
+     public function show(Car $car)
+     {
+       return view('show',compact('car'));
+     }
+
+    // public function show($id)
+    // {
+    //   $car = Car::find($id);
+    //   return view('show',compact('car'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -66,9 +76,9 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Car $car)
     {
-        //
+      return view('create',compact('car'));
     }
 
     /**
@@ -78,9 +88,11 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Car $car)
     {
-        //
+      $data = $request->all();
+      $car->update($data);
+      return view('show',compact('car'));
     }
 
     /**
@@ -89,8 +101,9 @@ class CarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Car $car)
     {
-        //
+      $car->delete();
+      return redirect()->route('cars.index');
     }
 }
